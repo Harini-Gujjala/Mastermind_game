@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastermind</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div>
+                <div class="brand-name">MASTERMIND</div>
+                <div class="brand-subtitle">Code Breaker</div>
+            </div>
+        </div>
+        <div class="header-stats">
+
+            <div class="stat-pill">
+                <span class="stat-label">Attempts</span>
+                <span class="stat-value" id="attemptsLeft">10</span>
+            </div>
+
+            <div class="stat-pill">
+                <span class="stat-label">Score</span>
+                <span class="stat-value" id="score">1000</span>
+            </div>
+
+            <button
+                class="restart-btn"
+                id="restartBtn"
+                aria-label="Restart game"
+                title="Restart game"
+            >
+                ↻
+            </button>
+
+        </div>
+
+    </header>
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Crack the Code</h1>
+    </section>
+    <!-- MAIN GAME -->
+    <main class="game-grid">
+        <!-- SIDE PANEL -->
+        <aside class="panel side-panel">
+            <!-- SECRET CODE -->
+            <section class="secret-section">
+                <div class="panel-title">
+                    Secret Code
+                </div>
+                <div class="secret-code" id="secretCode" aria-label="Secret code">
+                    <div class="secret-slot hidden"></div>
+                    <div class="secret-slot hidden"></div>
+                    <div class="secret-slot hidden"></div>
+                    <div class="secret-slot hidden"></div>
+                </div>
+            </section>
+            <!-- LEGEND -->
+            <section class="legend">
+                <div class="panel-title">
+                    Feedback
+                </div>
+                <div class="legend-row">
+                    <span class="legend-dot"></span>
+                    <span>
+                        Correct color & position
+                    </span>
+                </div>
+                <div class="legend-row">
+                    <span class="legend-dot partial"></span>
+                    <span>
+                        Correct color
+                    </span>
+                </div>
+                <div class="legend-row">
+                    <span class="legend-dot empty"></span>
+                    <span>
+                        Incorrect color
+                    </span>
+                </div>
+            </section>
+            <!-- STATISTICS -->
+            <section class="stats-section">
+                <div class="panel-title">
+                    Statistics
+                </div>
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <strong id="gamesPlayed">0</strong>
+                        <span>Games Played</span>
+                    </div>
+                    <div class="mini-stat">
+                        <strong id="gamesWon">0</strong>
+                        <span>Games Won</span>
+                    </div>
+                    <div class="mini-stat">
+                        <strong id="bestScore">—</strong>
+                        <span>Best Score</span>
+                    </div>
+                    <div class="mini-stat">
+                        <strong id="bestAttempts">—</strong>
+                        <span>Best Attempts</span>
+                    </div>
+                </div>
+            </section>
+        </aside>
+        <!-- BOARD -->
+        <section class="panel board-panel">
+            <!-- BOARD HEADER -->
+            <div class="board-header">
+                <div class="board-heading">
+                    <h2>Your Guesses</h2>
+                    <p>
+                        Use the feedback to find the hidden code.
+                    </p>
+                </div>
+                <div class="attempt-badge" id="attemptBadge">
+                    0 / 10
+                </div>
+            </div>
+            <!-- GUESS HISTORY -->
+            <div class="board" id="board" aria-label="Guess history">
+                <!-- Rows are created by JavaScript -->
+            </div>
+            <!-- CONTROLS -->
+            <section class="controls">
+                <div class="controls-label">
+                    Choose a color
+                </div>
+                <!-- COLOR PALETTE -->
+                <div class="palette" id="palette" aria-label="Color selection">
+                    <button
+                        class="color-button red"
+                        data-color="red"
+                        aria-label="Select red"
+                        title="Red"
+                    ></button>
+                    <button
+                        class="color-button yellow"
+                        data-color="yellow"
+                        aria-label="Select yellow"
+                        title="Yellow"
+                    ></button>
+                    <button
+                        class="color-button green"
+                        data-color="green"
+                        aria-label="Select green"
+                        title="Green"
+                    ></button>
+                    <button
+                        class="color-button blue"
+                        data-color="blue"
+                        aria-label="Select blue"
+                        title="Blue"
+                    ></button>
+                    <button
+                        class="color-button purple"
+                        data-color="purple"
+                        aria-label="Select purple"
+                        title="Purple"
+                    ></button>
+                    <button
+                        class="color-button orange"
+                        data-color="orange"
+                        aria-label="Select orange"
+                        title="Orange"
+                    ></button>
+                </div>
+                <!-- ACTION BUTTONS -->
+                <div class="actions">
+                    <button
+                        class="action-btn check-btn"
+                        id="checkBtn"
+                    >
+                        CHECK
+                    </button>
+                    <button
+                        class="action-btn hint-btn"
+                        id="hintBtn"
+                    >
+                        HINT
+                        <span
+                            class="hint-count"
+                            id="hintCount"
+                        >
+                            3 left
+                        </span>
+                    </button>
+                </div>
+                <!-- STATUS -->
+                <div
+                    class="status-message"
+                    id="statusMessage"
+                    aria-live="polite"
+                ></div>
+                <!-- HINT -->
+                <div
+                    class="hint-box"
+                    id="hintBox"
+                    aria-live="polite"
+                ></div>
+            </section>
+        </section>
+    </main>
+</div>
+<!-- RESULT OVERLAY -->
+<div
+    class="overlay"
+    id="resultOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="resultTitle"
+>
+    <div class="result-card">
+        <div
+            class="result-icon"
+            id="resultIcon"
+        >
+            ✓
+        </div>
+        <h2 id="resultTitle">
+            Code Cracked
+        </h2>
+        <p id="resultMessage">
+            You found the secret code.
+        </p>
+        <!-- REVEALED CODE -->
+        <div
+            class="result-code"
+            id="resultCode"
+        >
+            <div class="secret-slot revealed"></div>
+            <div class="secret-slot revealed"></div>
+            <div class="secret-slot revealed"></div>
+            <div class="secret-slot revealed"></div>
+        </div>
+        <!-- RESULT DETAILS -->
+        <div class="result-details">
+            <div class="result-detail">
+                <strong id="resultAttempts">
+                    0
+                </strong>
+                <span>
+                    Attempts Used
+                </span>
+            </div>
+            <div class="result-detail">
+                <strong id="resultScore">
+                    0
+                </strong>
+                <span>
+                    Final Score
+                </span>
+            </div>
+        </div>
+        <button
+            class="play-again"
+            id="playAgainBtn"
+        >
+            PLAY AGAIN
+        </button>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
