@@ -91,6 +91,10 @@ Add screenshots or a GIF of the game here to showcase the interface and gameplay
 * Additional game modes
 * Improved accessibility
 
+## 🚀 Live Demo
+
+[Play Mastermind](https://harini-gujjala.github.io/Mastermind_game/)
+
 ## 👩‍💻 Author
 
 **Harini G.**
